@@ -1,0 +1,54 @@
+@use '@angular/material' as mat;
+
+.widget {
+    @include mat.theme((color: mat.$cyan-palette, ));
+    width: 650px;
+    color: var(--mat-sys-primary);
+    border: #083eb4 2px solid;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    margin: 15px;
+}
+
+.widget-header {
+    border-bottom: #0e6321 2px solid;
+    margin: 0 -10px 0 -10px;
+    padding: 15px;
+}
+
+.widget-title {
+    @include mat.theme((color: mat.$magenta-palette, ));
+    font-size: 18px;
+    color: var(--mat-sys-primary);
+    font-weight: bold;
+}
+
+.widget-subtitle {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.widget-body {
+    display: grid;
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    margin: auto;
+    padding: 16px;
+    border: 1px solid #ccc;
+    //border-top: 10px solid #ccc;
+    border-radius: 0 0 8px 8px;
+}
+
+.action {
+    //display: grid;
+    text-align: right;
+
+
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
