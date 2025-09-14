@@ -8,7 +8,7 @@ import { interval } from "rxjs";
   standalone: true,
   imports   : [CommonModule],
   template: `
-    <div>Full weather condition details, extended forecast, etc.</div>
+    <div>Full weather details, extended forecast, etc.</div>
     <div>Sky Condition: ☀️</div>  
     <div>Temperature: {{temperature}}°C</div>
     <div>Last Updated At: {{lastUpdateAt | date: 'medium'}}</div>

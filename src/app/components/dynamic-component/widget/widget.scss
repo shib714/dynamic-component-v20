@@ -33,22 +33,26 @@
     display: grid;
     background: var(--mat-sys-primary);
     color: var(--mat-sys-on-primary);
-    margin: auto;
+    margin: 0px -10px -10px -10px;
     padding: 16px;
-    border: 1px solid #ccc;
-    //border-top: 10px solid #ccc;
+    border: 1px solid #042210;
     border-radius: 0 0 8px 8px;
 }
 
-.action {
+.widget-action {
     //display: grid;
     text-align: right;
-
-
 }
 
 .buttons {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row ;
+    align-items: felex-start;
+    gap: 15rem;
 }

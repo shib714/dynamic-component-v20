@@ -1,4 +1,4 @@
-import { Component, input, model, output } from '@angular/core';
+import { Component, computed, input, model, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -6,16 +6,25 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule],
   template: `
   <div class="widget">
-    <div class="flex-row">
-        <img class="widget-icon" src="assets/weather.png" alt="Weather Icon" />
-        <button mat-flat-button class="accent action" (click)="closed.emit()">close</button>
-    </div>
     <div class="widget-header">
+        <div class="flex-row">
+          <img class="widget-icon" src="assets/weather.png" alt="Weather Icon" />
+          <button mat-flat-button class="accent" (click)="closed.emit()">Close</button>
+        </div>    
         <div class="widget-title">{{title()}}</div>
         <div class="widget-subtitle">{{description()}}</div>
     </div>
     <div class="widget-body">
-        <ng-content><p class="no-content">No content...</p></ng-content>        
+        <div class="widget-action">
+            <button mat-flat-button class="accent" (click)="collapsed.set(!collapsed())">{{btnText()}}</button>
+        </div>       
+        <div class="widget-content">
+          @if (!collapsed()) { 
+            <ng-content></ng-content> 
+          } @else {
+            <p class="no-content">No content...</p>
+          }
+        </div>            
     </div>
 </div>`,
   styleUrl: './widget.scss'
@@ -24,11 +33,12 @@ export class Widget {
   title = input.required<string>();
   description = input.required<string>();
 
-  collapsed = model(false);
-  closed = output<void>();
+  collapsed = model(false);// two-way binding
+  closed = output<void>(); // Event emitter to notify parent component when the widget is closed
 
-   ngOnDestroy() {
+  btnText = computed(() => this.collapsed() ? 'Expand' : 'Collapse');
+
+  ngOnDestroy() {
     console.log('Weather widget is destroyed...');
   }
-
 }
