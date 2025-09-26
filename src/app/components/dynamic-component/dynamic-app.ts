@@ -4,39 +4,39 @@ import { MatButtonModule } from '@angular/material/button';
 import { WeatherContent } from './widget/weather-content';
 
 @Component({
-  selector: 'dynamic-component',
+  selector: 'dynamic-app',
   imports: [MatButtonModule, WeatherContent],
-  template: `
+  template: `    
+    <h1>Dynamic Component in Angular 20</h1>
     <main id="content">
-      <h1>Dynamic Component in Angular 20</h1>
       <label class="toggle">
         <input type="checkbox" [checked]="compactMode()" (change)="toggleCompactMode()"/>Compact Mode
       </label>
       <ng-template #weatherContent><weather-content/></ng-template>
       <section class="toolbar ">
           <p>Click the button to create the widget dynamically.</p>
-          <button mat-flat-button (click)="createComponent()">Create widget</button>          
+          <button mat-flat-button (click)="createComponent()">Create widget</button>  
+          <button mat-flat-button (click)="destroyComponent()" class="warn">Destroy widget</button>        
       </section>
       <!-- Place holder where Widget component will be projected -->
-      <ng-container #container/>
-      <button mat-flat-button (click)="destroyComponent()" class="warn">Destroy widget</button>
+      <ng-container #container/>      
   </main>
 `,
-  styleUrl: './dynamic-component.scss'
+  styleUrl: './dynamic-app.scss'
 })
-export class DynamicComponent {
+export class DynamicApp {
   compactMode = signal(false);
-  viewContainerRef = viewChild('container', { read: ViewContainerRef });
+
+  vcr = viewChild('container', { read: ViewContainerRef });
   #componentRef?: ComponentRef<Widget>;  
   weatherContent = viewChild<TemplateRef<unknown>>('weatherContent');
 
   createComponent() {
     // Clear any existing component before creating a new one
-    this.viewContainerRef()?.clear();
-    console.log('Creating component');
-    const content = this.viewContainerRef()?.createEmbeddedView(this.weatherContent()!);
+    this.vcr()?.clear();
+    const content = this.vcr()?.createEmbeddedView(this.weatherContent()!);
 
-    this.#componentRef = this.viewContainerRef()?.createComponent(Widget, {
+    this.#componentRef = this.vcr()?.createComponent(Widget, {
       bindings: [
         inputBinding('title', () => 'Weather Widget'),
         inputBinding('description', () => 'Current weather condition in Ottawa, Ontario'),
@@ -46,8 +46,7 @@ export class DynamicComponent {
           console.log('Component closed');
           this.#componentRef?.destroy(); // Destroy the component when the closed event is emitted
           this.#componentRef = undefined; //let garbage collector to collect
-        })
-        
+        })        
       ],
       projectableNodes: [
         content?.rootNodes!
@@ -58,7 +57,7 @@ export class DynamicComponent {
   }
   destroyComponent() {
     console.log('Destroying the widget component');
-    this.viewContainerRef()?.clear();
+    this.vcr()?.clear();
   }
   toggleCompactMode() {
     this.compactMode.set(!this.compactMode());

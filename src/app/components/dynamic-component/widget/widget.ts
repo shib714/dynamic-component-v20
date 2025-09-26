@@ -2,7 +2,7 @@ import { Component, computed, input, model, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-widget',
+  selector: 'widget',
   imports: [MatButtonModule],
   template: `
   <div class="widget">

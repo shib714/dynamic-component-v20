@@ -2,7 +2,7 @@
 
 .widget {
     @include mat.theme((color: mat.$cyan-palette, ));
-    width: 650px;
+    width: auto;
     color: var(--mat-sys-primary);
     border: #083eb4 2px solid;
     padding: 10px;

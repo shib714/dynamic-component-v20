@@ -9,8 +9,8 @@ export const routes: Routes = [
             .then((m) => m.Home), title: 'Home'
     },
     {
-        path: 'dynamic-component',
-        loadComponent: () => import('./components/dynamic-component/dynamic-component')
-            .then((m) => m.DynamicComponent), title: 'Dynamic Component'
+        path: 'dynamic-app',
+        loadComponent: () => import('./components/dynamic-component/dynamic-app')
+            .then((m) => m.DynamicApp), title: 'Dynamic Component'
     },
 ];
