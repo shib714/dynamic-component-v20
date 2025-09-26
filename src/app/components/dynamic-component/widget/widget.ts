@@ -33,8 +33,8 @@ export class Widget {
   title = input.required<string>();
   description = input.required<string>();
 
-  collapsed = model(false);// two-way binding
   closed = output<void>(); // Event emitter to notify parent component when the widget is closed
+  collapsed = model(false);// two-way binding  
 
   btnText = computed(() => this.collapsed() ? 'Expand' : 'Collapse');
 

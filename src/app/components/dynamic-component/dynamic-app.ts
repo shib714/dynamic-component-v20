@@ -30,29 +30,30 @@ export class DynamicApp {
   vcr= viewChild('container', { read: ViewContainerRef});
   #componentRef?: ComponentRef<Widget>;  
   weatherContent = viewChild<TemplateRef<unknown>>('weatherContent');
-  
+
   createComponent() {
     // Clear any existing component before creating a new one
     this.vcr()?.clear();
-    console.log('Creating component');
     const content = this.vcr()?.createEmbeddedView(this.weatherContent()!);
-    //create the widget component with the embedded view of content
-    this.#componentRef = this.vcr()?.createComponent(Widget, {
+    //create the widget component with the embedded view of the content
+    this.#componentRef = this.vcr()?.createComponent(
+      Widget, {
+      bindings: [
+        inputBinding('title', () => 'Weather Widget'),
+        inputBinding('description', () => 'Current weather condition in Ottawa, Ontario'),
+        inputBinding('collapsed', () => this.compactMode),  
+        twoWayBinding('collapsed', this.compactMode),
+        outputBinding('closed', () => {
+          this.#componentRef?.destroy();
+          this.#componentRef = undefined;
+        })      
+      ],
       projectableNodes: [
         content?.rootNodes!
       ]
     });
-    //handle the inputs for the dynamically created component
-    this.#componentRef?.setInput('title', 'Weather Widget');
-    this.#componentRef?.setInput('description', 'Current weather condition in Ottawa, Ontario');
 
-
-    //handle the output event from the dynamically created component
-    this.#componentRef?.setInput('collapsed', this.compactMode());
-    this.#componentRef?.instance.closed.subscribe(() => {
-      console.log('Component closed');
-      this.#componentRef?.destroy(); // Destroy the component when the closed event is emitted
-    })
+  
   }
   destroyComponent() {
     console.log('Destroying the widget component');
