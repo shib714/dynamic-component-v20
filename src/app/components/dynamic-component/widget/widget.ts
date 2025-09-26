@@ -39,6 +39,6 @@ export class Widget {
   btnText = computed(() => this.collapsed() ? 'Expand' : 'Collapse');
 
   ngOnDestroy() {
-    console.log('Weather widget is destroyed...');
+    console.log('Widget component is destroyed...');
   }
 }
