@@ -2,6 +2,8 @@ import { Component, ComponentRef, effect, inputBinding, outputBinding, signal, T
 import { Widget } from './widget/widget';
 import { MatButtonModule } from '@angular/material/button';
 import { WeatherContent } from './widget/weather-content';
+import { HoverEffectDirective } from './widget/hover-effect.directive';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'dynamic-app',
@@ -50,6 +52,16 @@ export class DynamicApp {
       ],
       projectableNodes: [
         content?.rootNodes!
+      ],
+      directives: [
+        HoverEffectDirective,
+        {
+          type: MatTooltip,
+          bindings: [
+            inputBinding('matTooltip', () => 'Please subscribe'),
+            inputBinding('matTooltipPosition', () => 'above')
+          ]
+        }
       ]
     });
 
